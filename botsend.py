@@ -3,12 +3,12 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-token = 'Insert your telegram token'
+token = 'Insert your token here'
 bot = telepot.Bot(token)
 
 def main(cmd):
 	text = cmd['text']
-	response = requests.get('https://www.imdb.com/find?ref_nv_sr_fnq=' + text + '&s=all')
+	response = requests.get('https://www.imdb.com/find?ref_nv_sr_fn&q=' + text + '&s=all')
 	soup = BeautifulSoup(response.text, 'html.parser')
 	tag = soup.find('tr',{'class':'findResult odd'})
 	html = tag.find('a')
@@ -18,7 +18,7 @@ def main(cmd):
 	tag = soup.find('span', attrs={'itemprop':'ratingValue'})
 	rate = tag.text
 	bot.sendMessage(cmd['chat']['id'], rate)
-	
+
 print('bot is listening')
 bot.message_loop(main)
 
